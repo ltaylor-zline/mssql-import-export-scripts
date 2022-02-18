@@ -20,4 +20,5 @@ if [[ -e $1 && ! $3 == "-f" ]]; then
 fi
 
 # Start export process using the connection string given in $1
-~/bin/sqlpackage/sqlpackage /a:Export /tf:"$1" /scs:"$CONN_STR"
+sqlpackage /a:Export /tf:"$1" /scs:"$CONN_STR"
+

@@ -18,4 +18,5 @@ if [[ ! -e $1 ]]; then
 fi
 
 # Start import process using the connection string given in $1
-~/bin/sqlpackage/sqlpackage /a:Import /sf:"$1" /tcs:"$CONN_STR"
+sqlpackage /a:Import /sf:"$1" /tcs:"$CONN_STR"
+
