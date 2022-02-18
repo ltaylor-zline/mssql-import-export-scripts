@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [[ $1 == "--help" || $1 == "-h" ]]; then
+  echo "Usage: $0 <backup.bacpac> [connection-str]"
+  exit
+fi
+
+if [[ $# -lt 2 || ! -e $2 ]]; then
+  echo "Please enter the connection string"
+  read CONN_STR
+else
+  CONN_STR=`cat $2`
+fi
+
+if [[ ! -e $1 ]]; then
+  echo "Error: Backup file not found: $1"
+  exit
+fi
+
+# Start import process using the connection string given in $1
+~/bin/sqlpackage/sqlpackage /a:Import /sf:"$1" /tcs:"$CONN_STR"

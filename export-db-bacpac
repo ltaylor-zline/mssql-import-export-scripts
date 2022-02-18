@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Exports a Database backup from a remote server to a local .bacpac download
+
+if [[ $1 == "--help" || $1 == "-h" ]]; then
+  echo "Usage: $0 <backup.bacpac> [connection-str]"
+  exit
+fi
+
+if [[ $# -lt 2 || ! -e $2 ]]; then
+  echo "Please enter the connection string"
+  read CONN_STR
+else
+  CONN_STR=`cat $2`
+fi
+
+if [[ -e $1 && ! $3 == "-f" ]]; then
+  echo "Error: Backup file already exists: $1\nExiting to avoid data loss.  Rerun with -f to overwrite anyway."
+  exit
+fi
+
+# Start export process using the connection string given in $1
+~/bin/sqlpackage/sqlpackage /a:Export /tf:"$1" /scs:"$CONN_STR"
